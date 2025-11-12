@@ -35,32 +35,25 @@ final class Gamify_Autoload
      */
     private function autoload($class_name)
     {
-        // We only handle classes with the 'Gamify_' prefix.
         if (strpos($class_name, 'Gamify_') !== 0) {
             return;
         }
 
-        // Convert the class name to a filename.
-        // 1. Replace underscores with hyphens.
-        // 2. Convert to lowercase.
+        // Convert class name to a filename, replacing underscores with hyphens.
         // Example: Gamify_Core_Loader -> gamify-core-loader
-        $file_name = str_replace('_', '-', strtolower($class_name));
+        $class_file = str_replace('_', '-', strtolower($class_name));
 
         // Split the class name to determine the subfolder.
-        // Example: Gamify_Core_Loader -> ['Gamify', 'Core', 'Loader']
         $parts = explode('_', $class_name);
-
-        // The second part of the class name (e.g., 'Core', 'Admin', 'API', 'System') is the subfolder.
-        // If there's no second part (e.g., class Gamify_Something), it looks in the 'includes' root.
         $subfolder = '';
         if (isset($parts[1])) {
-            // Convert subfolder name to lowercase.
+            // We use the second part as the subfolder name.
             $subfolder = strtolower($parts[1]) . '/';
         }
 
         // Construct the full file path.
         // Example: includes/core/class-gamify-core-loader.php
-        $file_path = GAMIFY_INCLUDES . $subfolder . 'class-' . $file_name . '.php';
+        $file_path = GAMIFY_INCLUDES . $subfolder . 'class-' . $class_file . '.php';
 
         if (is_readable($file_path)) {
             require_once $file_path;

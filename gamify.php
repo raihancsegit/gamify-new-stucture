@@ -52,7 +52,7 @@ final class Gamify
 
     public function on_plugins_loaded()
     {
-        Gamify_Loader::instance();
+        Gamify_Core_Loader::instance();
     }
 }
 
