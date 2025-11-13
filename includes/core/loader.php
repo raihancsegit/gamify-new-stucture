@@ -1,9 +1,10 @@
 <?php
-if (! defined('ABSPATH')) {
-    exit;
-}
 
-final class Gamify_Core_Loader
+namespace Gamify\Core;
+
+if (! defined('ABSPATH')) exit;
+
+final class Loader
 {
     private static $instance = null;
 
@@ -17,9 +18,8 @@ final class Gamify_Core_Loader
 
     private function __construct()
     {
-        // Autoloader will load these files when the classes are instantiated.
-        new Gamify_Admin_Menu();
-        new Gamify_API_Manager();
-        new Gamify_System_Trigger_Engine();
+        new \Gamify\Admin\Menu();
+        new \Gamify\API\Manager();
+        new \Gamify\System\Triggers();
     }
 }

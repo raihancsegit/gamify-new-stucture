@@ -2,18 +2,11 @@
 
 /**
  * Plugin Name:       Gamify
- * Description:       A modern gamification plugin for WordPress.
  * Version:           1.0.0
- * Author:            Kodezen
+ * Author:            Your Name
  * Text Domain:       gamify
  */
-
-if (! defined('ABSPATH')) {
-    exit;
-}
-if (class_exists('Gamify')) {
-    return;
-}
+if (! defined('ABSPATH')) exit;
 
 final class Gamify
 {
@@ -23,9 +16,9 @@ final class Gamify
     {
         $this->define_constants();
         require_once GAMIFY_INCLUDES . 'autoload.php';
-        require_once GAMIFY_INCLUDES . 'gamify-functions.php';
+        require_once GAMIFY_INCLUDES . 'functions.php';
         register_activation_hook(GAMIFY_FILE, [$this, 'activate']);
-        add_action('plugins_loaded', [$this, 'on_plugins_loaded']);
+        add_action('plugins_loaded', [$this, 'init_plugin']);
     }
 
     public static function instance()
@@ -47,17 +40,17 @@ final class Gamify
 
     public function activate()
     {
-        new Gamify_Core_Installer();
+        new \Gamify\Core\Installer();
     }
 
-    public function on_plugins_loaded()
+    public function init_plugin()
     {
-        Gamify_Core_Loader::instance();
+        \Gamify\Core\Loader::instance();
     }
 }
 
-function gamify_start()
+function gamify()
 {
     return Gamify::instance();
 }
-gamify_start();
+gamify();
